@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1>Welcome to the Student Tasks Tracker App</h1>
+    <h1>Welcome to the Student Tasks Tracker Application</h1>
 
     <form id="task-form">
         <label for="task-input">Task:</label>
