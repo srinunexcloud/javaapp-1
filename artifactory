@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Checkout your Maven project code from version control
-                git 'https://github.com/srinunexcloud/javaapp-1.git'
+             git credentialsId: 'git', url: 'https://github.com/srinunexcloud/javaapp-1.git'
 
                 // Build the Maven project using Maven installed on the Jenkins agent
                 sh 'mvn clean package'
