@@ -1,27 +1,23 @@
 pipeline {
     agent any
+
     environment {
-        PATH = "/opt/apache-maven-3.9.3/bin:${PATH}"
+        // Set your JFrog Artifactory credentials as Jenkins credentials
         ARTIFACTORY_CREDENTIALS = credentials('jfrog')
-}
-    stages{
-        stage("git clone"){
-          steps {
-            git 'https://github.com/srinunexcloud/javaapp-1.git'
-          }
-       }
-       stage("codebuild"){
-        steps {
-            sh 'mvn clean package'
-        }
-       }
-       stage("test-code"){
+    }
+
+    stages {
+        stage('Build') {
             steps {
-            sh 'mvn test'
-           }
-       }
-      
-       stage('Publish to Artifactory') {
+                // Checkout your Maven project code from version control
+                git 'https://github.com/srinunexcloud/javaapp-1.git'
+
+                // Build the Maven project using Maven installed on the Jenkins agent
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Publish to Artifactory') {
             steps {
                 script {
                     // Deploy the Maven artifacts to JFrog Artifactory
@@ -36,7 +32,5 @@ pipeline {
                 }
             }
         }
-
     }
 }
-
