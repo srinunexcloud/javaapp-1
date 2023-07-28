@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    environment {
+        PATH = "/opt/apache-maven-3.9.2/bin:${PATH}"
+}
+    stages{
+        stage("git clone"){
+          steps {
+            git 'https://github.com/srinunexcloud/javaapp-1.git'
+          }
+       }
+       stage("codebuild"){
+        steps {
+            sh 'mvn clean package'
+        }
+       }
+       stage("test-code"){
+            steps {
+            sh 'mvn test'
+           }
+       }
+(*        stage("code deploy") {
+            steps {
+            deploy adapters: [tomcat9(credentialsId: 'ebbd9447-d422-4da7-81e1-92c800c3525e', path: '', url: 'http://43.204.24.244:8080/')], contextPath: null, war: '**/*.war'
+            }
+       } *)
+
+    }
+}
+
